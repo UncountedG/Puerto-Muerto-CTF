@@ -1,0 +1,43 @@
+services:
+  machine:
+    build:
+      context: ./machine
+      dockerfile: Dockerfile
+    container_name: ${MACHINE_NAME}-machine
+    environment:
+      - FLAG1=${FLAG1}
+      - FLAG2=${FLAG2}
+      - FLAG3=${FLAG3}
+      - FTP_PORT=${FTP_PORT}
+      - SSH_PORT=${SSH_PORT}
+      - HTTP_PORT=${HTTP_PORT}
+    network_mode: host
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    privileged: true
+    tmpfs:
+      - /tmp:exec,mode=1777
+
+  # Portal service to display flags and provide the master flag upon completion
+  portal:
+    build:
+      context: ./portal
+      dockerfile: Dockerfile
+    container_name: ${MACHINE_NAME}-portal
+    environment:
+      - FLAG1_HASH=${FLAG1_HASH}
+      - FLAG2_HASH=${FLAG2_HASH}
+      - FLAG3_HASH=${FLAG3_HASH}
+      - MASTER_FLAG=${MASTER_FLAG}
+    ports:
+      - "${PORTAL_PORT}:3000"
+    networks:
+      - ctfnet
+    restart: unless-stopped
+
+
+networks:
+  ctfnet:
+    driver: bridge
