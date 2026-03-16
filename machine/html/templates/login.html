@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGEPORT — Acceso al Sistema</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-body">
+
+    <div class="login-wrapper">
+
+        <header class="login-header">
+            <div class="login-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="56" height="56" fill="none">
+                    <circle cx="32" cy="32" r="30" stroke="#4a90a4" stroke-width="2"/>
+                    <path d="M16 40 L32 16 L48 40 Z" stroke="#4a90a4" stroke-width="2" fill="none"/>
+                    <line x1="22" y1="40" x2="42" y2="40" stroke="#4a90a4" stroke-width="2"/>
+                    <line x1="32" y1="40" x2="32" y2="48" stroke="#4a90a4" stroke-width="2"/>
+                    <line x1="24" y1="48" x2="40" y2="48" stroke="#4a90a4" stroke-width="2"/>
+                </svg>
+            </div>
+            <div class="login-title-block">
+                <h1>SIGEPORT</h1>
+                <span>Sistema de Gestión Portuaria Integrado</span>
+            </div>
+        </header>
+
+        <div class="login-card">
+
+            <div class="login-card-header">
+                <p class="login-subtitle">Portal de Acceso — Módulo de Inspección</p>
+                <p class="login-notice">Acceso restringido a personal autorizado.<br>El uso no autorizado está penado por la Ley Marítima § 47.</p>
+            </div>
+
+            <form method="POST" action="/" autocomplete="off">
+
+                <div class="form-group">
+                    <label for="inspector_id">ID de Inspector</label>
+                    <input
+                        type="text"
+                        id="inspector_id"
+                        name="inspector_id"
+                        placeholder="Ej: INS-001"
+                        required
+                        autofocus
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="access_code">Código de Acceso</label>
+                    <input
+                        type="password"
+                        id="access_code"
+                        name="access_code"
+                        placeholder="Código de acceso"
+                        required
+                    >
+                </div>
+
+                {% if error %}
+                <div class="form-error">
+                    <span>{{ error }}</span>
+                </div>
+                {% endif %}
+
+                <button type="submit" class="btn-login">Iniciar Sesión</button>
+
+            </form>
+
+        </div>
+
+        <footer class="login-footer">
+            <p>Puerto Muerto — Infraestructura Portuaria Legacy &copy; 2021</p>
+            <p>SIGEPORT v2.3 — Servidor de Gestión de Acceso</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
